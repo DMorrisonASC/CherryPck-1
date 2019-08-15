@@ -95,9 +95,17 @@ function getVids() {
         let inner;
         let group;
         let card;
-        let iframe;
         const item = document.getElementsByClassName("carousel-item active");
+        for (let i = 0; i < vids.length / 3; i++) {
+          const group = document.createElement("div");
+          group.className = "card-group";
+          item[i].appendChild(group);
+        }
         for (let i = 0; i < vids.length; i++) {
+          const group = document.getElementsByClassName("card-group")[
+            Math.floor(i / 3)
+          ];
+
           const iframe = document.createElement("iframe");
           iframe.src = vids[i];
           iframe.allow = true;
