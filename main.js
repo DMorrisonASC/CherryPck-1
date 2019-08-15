@@ -41,7 +41,7 @@ function execute() {
     .list({
       part: "snippet,contentDetails",
       mine: true,
-      maxResults: 15
+      maxResults: 12
     })
     .then(function(response) {
       this.response = response;
@@ -72,7 +72,7 @@ function getVids() {
   return gapi.client.youtube.videos
     .list({
       part: "snippet,contentDetails,statistics",
-      maxResults: 13,
+      maxResults: 12,
       myRating: "like"
     })
     .then(
@@ -91,10 +91,6 @@ function getVids() {
          *
          *
          */
-        const inners = document.getElementById("inner");
-        const section = document.getElementsByClassName(
-          "carousel-item active"
-        )[0];
         let j = 0;
         let inner;
         let item;
@@ -129,8 +125,7 @@ function getVids() {
             group.appendChild(card);
             console.log(j);
             j++;
-          } else {
-            j = 0;
+            if (j === 3) j = 0;
           }
         }
         // Handle the results here (response.result has the parsed body).
