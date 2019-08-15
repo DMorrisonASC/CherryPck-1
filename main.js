@@ -93,25 +93,28 @@ function getVids() {
          */
         let j = 0;
         let inner;
-        let group;
         let card;
-        const item = document.getElementsByClassName("carousel-item active");
-        for (let i = 0; i < vids.length / 3; i++) {
-          const group = document.createElement("div");
-          group.className = "card-group";
-          item[i].appendChild(group);
-        }
+        const itemA = document.getElementsByClassName(
+          "carousel-item active"
+        )[0];
+        const item = document.getElementsByClassName("carousel-item");
+        let group;
         for (let i = 0; i < vids.length; i++) {
-          const group = document.getElementsByClassName("card-group")[
-            Math.floor(i / 3)
-          ];
+          if (i % 3 === 0) {
+            group = document.createElement("div");
+            group.className = "card-group";
+          }
 
           const iframe = document.createElement("iframe");
           iframe.src = vids[i];
-          iframe.allow = true;
+          iframe.allowFullscreen = true;
 
           group.appendChild(iframe);
-          item[Math.floor(i / 3)].appendChild(group);
+          if (i >= 3 && i < 6) {
+            itemA.appendChild(group);
+          } else {
+            item[Math.floor(i / 3)].appendChild(group);
+          }
           //  if (j === 0) {
           //   inner = document.getElementById("inner");
           //   item = document.createElement("div");
