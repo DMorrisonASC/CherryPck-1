@@ -49,7 +49,6 @@ function execute() {
         channelIds.push(this.response.result.items[i].snippet.channelId);
         channels.push(this.response.result.items[i]);
         const p = document.createElement("p");
-        // console.log(response.result.items[i]);
       }
     })
     .then(
@@ -96,30 +95,43 @@ function getVids() {
         const section = document.getElementsByClassName(
           "carousel-item active"
         )[0];
-        const cardGroup = document.getElementsByClassName("card-group");
+        let j = 0;
+        let inner;
+        let item;
+        let group;
+        let card;
+        let iframe;
         for (let i = 0; i < vids.length; i++) {
-          const group = i / 3;
-          const iframe = document.createElement("iframe");
-          iframe.src = vids[i];
-          iframe.allowFullscreen = true;
-
-          const card = document.createElement("div");
-          card.appendChild(iframe);
-          card.className = "card";
-
-          cardGroup[0].appendChild(card);
-
-          // const item = document.createElement("div");
-          // const group = document.createElement("div");
-          // const card = document.createElement("div");
-          // inner.appendChild(item);
-          // item.appendChild(group);
-          // group.appendChild(card);
-          // card.appendChild(iframe);
-          // inner.className = "carousel-inner";
-          // item.className = "carousel-item";
-          // group.className = "card-group";
-          // card.className = "card";
+          if (j === 0) {
+            inner = document.getElementById("inner");
+            item = document.createElement("div");
+            group = document.createElement("div");
+            item.className = "carousel-item active";
+            group.className = "card-group";
+            item.appendChild(group);
+            inner.appendChild(item);
+            card = document.createElement("div");
+            card.className = "card";
+            iframe = document.createElement("iframe");
+            iframe.src = vids[i];
+            iframe.allowFullscreen = true;
+            card.appendChild(iframe);
+            group.appendChild(card);
+            console.log(j);
+            j++;
+          } else if (j < 3) {
+            card = document.createElement("div");
+            card.className = "card";
+            iframe = document.createElement("iframe");
+            iframe.src = vids[i];
+            iframe.allowFullscreen = true;
+            card.appendChild(iframe);
+            group.appendChild(card);
+            console.log(j);
+            j++;
+          } else {
+            j = 0;
+          }
         }
         // Handle the results here (response.result has the parsed body).
         console.log("Response", response);
@@ -135,75 +147,3 @@ gapi.load("client:auth2", function() {
       "693361181160-606m03ck0og0l1ati77naa9li3c4heul.apps.googleusercontent.com"
   });
 });
-// JS for Spotify API
-
-// WHAT CODE DOES:
-//
-/* 
-    Gets users playlist and displays it in the index.html
-*/
-// First get token from spotify to access data
-fetch("https://api.spotify.com/v1/me/playlists", {
-  headers: {
-    "Content-Type": "application/json",
-    // 'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization:
-      "Bearer BQD9U-xyaC8zG0qiMFsGW6-B5k5CTThLoXPdFSF6sXyDG-Jr16XL2uWZ29wSqwLdfVAhSw0HjRKGiMsOUY9WcIFgVcUbcwxBUCv41J97s-N5Ft83wbT8xC68sct3l47CUBy0xnGZPlkW1A7XFOVnJKK3wZxgIV3oeNhrlqIzPRWpw7Y"
-  }
-})
-  .then(function(respon) {
-    return respon.json();
-  })
-  .then(function(myJson) {
-    // Makes var to the amount of playlist in the account. So if user has 3 playlist, it matches it.
-    let playlistLength = myJson.items.length;
-
-    for (let i = 0; i < playlistLength; i++) {
-      // embedUrl = the link to original link to spotify playlist
-      let embedUrl = myJson.items[i].external_urls.spotify;
-      // splits link to spotify playlist, since the only requirement for accessing full playlist
-      //  is adding the "word embed/".
-      // Example https://open.spotify.com/playlist/37i9dQZF1DX0XUsuxWHRQd -> https://open.spotify.com/embed/playlist/37i9dQZF1DX0XUsuxWHRQd
-      const splitter = "https://open.spotify.com/";
-      // split converts string into an array in order to decide where to place "embed/"
-      let split = embedUrl.split(splitter);
-      split[0] = "embed/";
-      split.unshift(splitter);
-      // .join turn array back to string, ('') = not including any spaces
-      embedUrl = split.join("");
-      console.log(embedUrl);
-
-      userData(embedUrl);
-    }
-  });
-
-// This function puts the fetched data(user's playlist) into slideshow
-const userData = data => {
-  // iframe.allowTransparency = "true"
-  // Puts iframes of Spotify into seperate slideshow
-  const carouselExampleControls_2 = document.getElementById(
-    "carouselExampleControls_2"
-  );
-  const iframe = document.createElement("iframe");
-  iframe.src = data;
-  // create elements
-  const itemPlaylist = document.createElement("div");
-  const groupPlaylist = document.createElement("div");
-  const cardPlaylist = document.createElement("div");
-  // Append/put divs into divs
-  innerPlaylist.appendChild(itemPlaylist);
-  itemPlaylist.appendChild(groupPlaylist);
-  groupPlaylist.appendChild(cardPlaylist);
-  cardPlaylist.appendChild(iframe);
-
-  // Give class names so slideshow can work
-  innerPlaylist.className = "inner-spotify";
-  itemPlaylist.className = "carousel-item-spotify";
-  groupPlaylist.className = "card-group-spotify";
-  cardPlaylist.className = "card-spotify";
-  // Spotify needs iframes to be encrypted
-  iframe.allow = "encrypted-media";
-  iframe.allowTransparency = "true";
-  iframe.width = "100%";
-  iframe.height = "380px";
-};
