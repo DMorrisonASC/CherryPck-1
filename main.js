@@ -93,40 +93,46 @@ function getVids() {
          */
         let j = 0;
         let inner;
-        let item;
         let group;
         let card;
         let iframe;
+        const item = document.getElementsByClassName("carousel-item active");
         for (let i = 0; i < vids.length; i++) {
-          if (j === 0) {
-            inner = document.getElementById("inner");
-            item = document.createElement("div");
-            group = document.createElement("div");
-            item.className = "carousel-item active";
-            group.className = "card-group";
-            item.appendChild(group);
-            inner.appendChild(item);
-            card = document.createElement("div");
-            card.className = "card";
-            iframe = document.createElement("iframe");
-            iframe.src = vids[i];
-            iframe.allowFullscreen = true;
-            card.appendChild(iframe);
-            group.appendChild(card);
-            console.log(j);
-            j++;
-          } else if (j < 3) {
-            card = document.createElement("div");
-            card.className = "card";
-            iframe = document.createElement("iframe");
-            iframe.src = vids[i];
-            iframe.allowFullscreen = true;
-            card.appendChild(iframe);
-            group.appendChild(card);
-            console.log(j);
-            j++;
-            if (j === 3) j = 0;
-          }
+          const iframe = document.createElement("iframe");
+          iframe.src = vids[i];
+          iframe.allow = true;
+
+          group.appendChild(iframe);
+          item[Math.floor(i / 3)].appendChild(group);
+          //  if (j === 0) {
+          //   inner = document.getElementById("inner");
+          //   item = document.createElement("div");
+          //   group = document.createElement("div");
+          //   item.className = "carousel-item active";
+          //   group.className = "card-group";
+          //   item.appendChild(group);
+          //   inner.appendChild(item);
+          //   card = document.createElement("div");
+          //   card.className = "card";
+          //   iframe = document.createElement("iframe");
+          //   iframe.src = vids[i];
+          //   iframe.allowFullscreen = true;
+          //   card.appendChild(iframe);
+          //   group.appendChild(card);
+          //   console.log(j);
+          //   j++;
+          // } else if (j < 3) {
+          //   card = document.createElement("div");
+          //   card.className = "card";
+          //   iframe = document.createElement("iframe");
+          //   iframe.src = vids[i];
+          //   iframe.allowFullscreen = true;
+          //   card.appendChild(iframe);
+          //   group.appendChild(card);
+          //   console.log(j);
+          //   j++;
+          //   if (j === 3) j = 0;
+          // }
         }
         // Handle the results here (response.result has the parsed body).
         console.log("Response", response);
