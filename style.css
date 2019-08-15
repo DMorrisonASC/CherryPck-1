@@ -140,3 +140,20 @@ div.card img {
   padding: 5px;
   padding-left: 3px;
 }
+
+.halfName {
+    background-color: #d81f26;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 3px;
+  }
+.highlight {
+    color: #d81f26;
+}
+.halfName {
+    background-color: #d81f26;
+    border-radius: 5px;
+    padding: 5px;
+    padding-left: 3px;
+}
+  

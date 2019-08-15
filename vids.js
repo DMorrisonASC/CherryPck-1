@@ -61,7 +61,7 @@ const userData = data => {
   // Give class names so slideshow can work
   innerPlaylist.className = "spotify-inner";
   itemPlaylist.className = "carousel-item-spotify";
-  groupPlaylist.className = "card-group-spotify active";
+  groupPlaylist.className = "card-group-spotify";
   cardPlaylist.className = "card-spotify";
   // Spotify needs iframes to be encrypted
   iframe.allow = "encrypted-media";
